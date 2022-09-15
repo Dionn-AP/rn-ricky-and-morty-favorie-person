@@ -29,13 +29,13 @@ export const ButtonViewMore = styled.TouchableOpacity`
     background-color: #48D1CC;
     border-radius: 4px;
     position: absolute;
-    bottom: 6px;
+    bottom: 8px;
     left: 38%;
 `
 
 export const TextButtonViewMore = styled.Text`
     color: #F5FFFA;
-    font-size: 10px;
+    font-size: 12px;
 `
 
 export const CardImage = styled.Image`
@@ -65,6 +65,48 @@ export const TextName = styled.Text`
 `
 
 export const TextGender = styled.Text`
-font-size: 16px;
+    font-size: 16px;
     color: #F5FFFA;
+`
+
+export const ContainerModal = styled.View`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.6);
+`
+
+export const ContainerIntoModal = styled.View`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    width: 375px;
+    background-color: #0F3460;
+    border-radius: 15px;
+`
+
+export const BtnCloseModal = styled.TouchableOpacity`
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    height: auto;
+    width: auto;
+`
+
+export const ImageModal = styled.Image`
+    height: 210px;
+    width: 210px;
+    border: 2px solid #FFF;
+    border-radius: 120px;
+    margin-bottom: 20px;
+`
+
+export const ContentTextsModal = styled.View`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
 `

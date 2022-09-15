@@ -6,11 +6,23 @@ import {
     CardText,
     ImageFavorite,
     ButtonViewMore,
-    TextButtonViewMore
+    TextButtonViewMore,
+    ContainerIntoModal,
+    BtnCloseModal,
+    ContainerModal,
+    ImageModal,
+    ContentTextsModal
 } from './styles';
+
+import { useState } from 'react';
+import { Modal } from 'react-native';
 
 import {
     MaterialIcons
+} from '@expo/vector-icons';
+
+import {
+    AntDesign
 } from '@expo/vector-icons';
 
 import {
@@ -25,60 +37,103 @@ import {
 } from '../../store/modules/favorites/reducer';
 
 import {
-    ICharacter,
-    IFavorites
+    ICharacter
 } from '../../types/character';
 
 const CardCharacter = ({ card }: ICharacter) => {
-    let contain: boolean = false;
+    const [showCardModal, setShowCardModal] = useState(false);
+    const [cardDetail, setCardDetail] = useState<ICharacter[] | any>();
+
     const cardFavorite = useSelector(cardStateData);
 
     const dispatch = useDispatch();
 
-    const addCadFavorite = (card: any) => {
-        
-        if (cardFavorite.includes(card)) {
-            contain = false;
-            dispatch(removeFavorites(card))
-        } else {
-            contain = true;
-            dispatch(addFavorites(card))
-        }
+    const addCadFavorite = (id: any) => {
+        cardFavorite.includes(id)
+            ? dispatch(removeFavorites(id))
+            : dispatch(addFavorites(id))
     }
 
-return (
-    <ContainerCard>
-        <ImageFavorite
-            onPress={() => addCadFavorite(card.id)}
-        >
-            <MaterialIcons
-                name={cardFavorite.includes(card.id)
-                    ? "favorite"
-                    : "favorite-outline"
-                }
-                size={28}
-                color="#FFF"
-            />
-        </ImageFavorite>
+    const cardDetailsCurrent = (detail: ICharacter) => {
 
-        <CardImage
-            source={{ uri: card.image }}
-        />
-        <CardText>
-            <TextName>
-                {card.name}
-            </TextName>
-            <TextGender>
-                {card.gender}
-            </TextGender>
-            <ButtonViewMore>
-                <TextButtonViewMore>
-                    Ver mais
-                </TextButtonViewMore>
-            </ButtonViewMore>
-        </CardText>
-    </ContainerCard>
-)
+        setShowCardModal(!showCardModal);
+        setCardDetail(detail);
+    }
+
+    return (
+        <ContainerCard>
+            <Modal
+                transparent={true}
+                animationType='slide'
+                visible={showCardModal}
+                onRequestClose={
+                    () => setShowCardModal(!showCardModal)
+                }
+            >
+                <ContainerModal>
+                    <ContainerIntoModal>
+                        <BtnCloseModal
+                            onPress={() => setShowCardModal(!showCardModal)}
+                        >
+                            <AntDesign
+                                name="closecircleo"
+                                size={38}
+                                color="#EAEBED"
+                            />
+                        </BtnCloseModal>
+                        <ImageModal
+                            source={{ uri: cardDetail?.image }}
+                        />
+                        <ContentTextsModal>
+                            <TextName>
+                                {cardDetail?.name}
+                            </TextName>
+                            <TextGender>
+                                {cardDetail?.gender}
+                            </TextGender>
+                            <TextGender>
+                                {cardDetail?.type}
+                            </TextGender>
+                            <TextGender>
+                                {cardDetail?.specie}
+                            </TextGender>
+                        </ContentTextsModal>
+                    </ContainerIntoModal>
+                </ContainerModal>
+            </Modal>
+            <ImageFavorite
+                onPress={() => addCadFavorite(card.id)}
+            >
+                <MaterialIcons
+                    name={cardFavorite.includes(card.id)
+                        ? "favorite"
+                        : "favorite-outline"
+                    }
+                    size={28}
+                    color="#FFF"
+                />
+            </ImageFavorite>
+
+            <CardImage
+                source={{ uri: card.image }}
+            />
+            <CardText>
+                <TextName>
+                    {card.name}
+                </TextName>
+                <TextGender>
+                    {card.gender}
+                </TextGender>
+                <ButtonViewMore
+                    onPress={() => cardDetailsCurrent(card)}
+                >
+                    <TextButtonViewMore>
+                        Ver mais
+                    </TextButtonViewMore>
+                </ButtonViewMore>
+            </CardText>
+        </ContainerCard>
+    )
 };
 
 export default CardCharacter;

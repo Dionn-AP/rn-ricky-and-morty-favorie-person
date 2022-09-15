@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 export const ContainerMain = styled.SafeAreaView`
-    padding: 45px 20px;
+    padding: 45px 20px 120px;
     background-color: #E0FFFF;
 `
 
