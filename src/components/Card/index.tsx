@@ -95,7 +95,7 @@ const CardCharacter = ({ card }: ICharacter) => {
                                 {cardDetail?.type}
                             </TextGender>
                             <TextGender>
-                                {cardDetail?.specie}
+                                {cardDetail?.species}
                             </TextGender>
                         </ContentTextsModal>
                     </ContainerIntoModal>
